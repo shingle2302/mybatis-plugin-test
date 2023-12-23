@@ -1,10 +1,12 @@
 package com.shingle.mybatis.config;
 
+import com.shingle.mybatis.mapper.PermissionRuleMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author shing2302
+ * @author shingle2302
+ * @email shingle2302@qq.com
  */
 @Configuration
 public class MybatisConfig {
