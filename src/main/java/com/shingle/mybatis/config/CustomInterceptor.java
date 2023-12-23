@@ -5,7 +5,6 @@ import com.shingle.mybatis.enums.SqlCondition;
 import com.shingle.mybatis.mapper.PermissionRuleMapper;
 import com.shingle.mybatis.model.PermissionRule;
 import com.shingle.mybatis.utils.SpringHelper;
-import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
@@ -26,7 +25,6 @@ import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;

@@ -1,6 +1,5 @@
 package com.shingle.mybatis.config;
 
-import com.shingle.mybatis.mapper.PermissionRuleMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
