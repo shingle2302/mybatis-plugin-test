@@ -7,6 +7,7 @@ import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.expression.operators.relational.InExpression;
 import net.sf.jsqlparser.expression.operators.relational.NamedExpressionList;
+import net.sf.jsqlparser.expression.operators.relational.ParenthesedExpressionList;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.parser.SimpleNode;
 import net.sf.jsqlparser.schema.Column;
@@ -29,7 +30,7 @@ public class SqlParseUtil {
 
         InExpression inExpression = new InExpression();
         inExpression.setLeftExpression(new Column("id"));
-        ExpressionList<StringValue> itemsList =new ExpressionList<>();
+        ParenthesedExpressionList<StringValue> itemsList =new ParenthesedExpressionList<>();
         itemsList.add(new StringValue("1"));
         itemsList.add(new StringValue("2"));
         itemsList.add(new StringValue("3"));
@@ -40,7 +41,6 @@ public class SqlParseUtil {
         } else {
             plainSelect.setWhere(inExpression);
         }
-        System.out.println(plainSelect);
         Assert.assertEquals("SELECT * FROM t_user WHERE name IN ('zhangSan') AND id IN ('1', '2', '3')",plainSelect.toString());
     }
 }

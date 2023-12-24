@@ -124,14 +124,14 @@ public class CustomInterceptor implements Interceptor {
                                 case IN:
                                     InExpression inExpression = new InExpression();
                                     inExpression.setLeftExpression(new Column(permissionDimension));
-                                    ExpressionList itemsList =new ExpressionList(new StringValue("user@user"));
-                                    inExpression.setRightExpression(itemsList);
+                                    ParenthesedExpressionList<StringValue> itemsList =new ParenthesedExpressionList<>(new StringValue("user@user"));
+                                   inExpression.setRightExpression(itemsList);
                                     expression = inExpression;
                                     break;
                                 case NOT_IN:
                                     InExpression notInExpression = new InExpression();
                                     notInExpression.setLeftExpression(new Column(permissionDimension));
-                                    ExpressionList notItemList =new ExpressionList(new StringValue("user6"));
+                                    ParenthesedExpressionList<StringValue> notItemList =new ParenthesedExpressionList<>(new StringValue("user@user"));
                                     notInExpression.setRightExpression(notItemList);
                                     notInExpression.setNot(true);
                                     expression = notInExpression;
