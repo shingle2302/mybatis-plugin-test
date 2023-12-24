@@ -14,7 +14,6 @@ import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.statement.select.SelectBody;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -27,6 +26,7 @@ import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -62,8 +62,7 @@ public class CustomInterceptor implements Interceptor {
                     String sql = statementHandler.getBoundSql().getSql();
                     Statement statement = CCJSqlParserUtil.parse(sql);
                     Select select = (Select) statement;
-                    SelectBody selectBody = select.getSelectBody();
-                    PlainSelect plainSelect = (PlainSelect) selectBody;
+                    PlainSelect plainSelect = select.getPlainSelect();
                     System.out.println("修改前: " + plainSelect);
 
                     Map<Integer, List<PermissionRule>> groupPermissionRuleMap = permissionRules.stream().collect(Collectors.groupingBy(PermissionRule::getGroupNo));
@@ -120,15 +119,15 @@ public class CustomInterceptor implements Interceptor {
                                 case IN:
                                     InExpression inExpression = new InExpression();
                                     inExpression.setLeftExpression(new Column(permissionDimension));
-                                    ItemsList itemsList =new ExpressionList(new StringValue("user@user"));
-                                    inExpression.setRightItemsList(itemsList);
+                                    ExpressionList itemsList =new ExpressionList(new StringValue("user@user"));
+                                    inExpression.setRightExpression(itemsList);
                                     expression = inExpression;
                                     break;
                                 case NOT_IN:
                                     InExpression notInExpression = new InExpression();
                                     notInExpression.setLeftExpression(new Column(permissionDimension));
-                                    ItemsList notItemList =new ExpressionList(new StringValue("user6"));
-                                    notInExpression.setRightItemsList(notItemList);
+                                    ExpressionList notItemList =new ExpressionList(new StringValue("user6"));
+                                    notInExpression.setRightExpression(notItemList);
                                     notInExpression.setNot(true);
                                     expression = notInExpression;
                                     break;
@@ -140,12 +139,14 @@ public class CustomInterceptor implements Interceptor {
                                     EqualsTo equalsTo = new EqualsTo(new Column(permissionDimension), new StringValue("user6"));
                                     expression = equalsTo;
                             }
-                            if (null != where) {
-                                AndExpression andExpression = new AndExpression(where, expression);
-                                plainSelect.setWhere(andExpression);
-                            } else {
-                                plainSelect.setWhere(expression);
-                            }
+                           if (Objects.nonNull(expression)){
+                               if (null != where) {
+                                   AndExpression andExpression = new AndExpression(where, expression);
+                                   plainSelect.setWhere(andExpression);
+                               } else {
+                                   plainSelect.setWhere(expression);
+                               }
+                           }
                         }
                     });
                     System.out.println("修改后: " + plainSelect);
