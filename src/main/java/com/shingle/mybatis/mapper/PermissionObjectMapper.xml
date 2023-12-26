@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shingle.mybatis.mapper.PermissionObjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.shingle.mybatis.model.PermissionObject">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <result property="permissionCode" column="PERMISSION_CODE" jdbcType="VARCHAR"/>
+        <result property="permissionName" column="PERMISSION_NAME" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="CREATED_AT" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="UPDATED_AT" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID
+        ,PERMISSION_CODE,PERMISSION_NAME,
+        CREATED_AT,UPDATED_AT
+    </sql>
+</mapper>
